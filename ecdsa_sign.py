@@ -4,8 +4,7 @@
 # The curve is represented in the Weierstrass form
 # y^2 = x^3 + ax + b, where 4A^3 + 27B^2 != 0
 # For this case we take A as 0 and B as 7
-# Visualise the curve first
-from hashlib import sha1
+from computations import compute_e, compute_s
 from methods import double_and_add_method
 # %%
 # Define the constants
@@ -34,35 +33,6 @@ r = x1 % n
 if r == 0:
     raise ValueError("r = 0, bad k, retry with different k")
 
-# %%
-# Covert k inverse mod n
-k_inverse_mod_n = pow(k, -1, n)
-def compute_e(m: bytes) -> int:
-    # Compute SHA1 of the message as bytes
-    h: bytes = sha1(m).digest()
-    e: int = int.from_bytes(h, byteorder='big')
-    return e
-
-# %%
-def compute_s(e: int, r: int, d: int, k: int, n: int) -> int:
-    """
-    e: integer from SHA-1(m)
-    r: x1 mod n from step 3
-    d: private key
-    k: the ephemeral nonce you chose (1 <= k <= n-1)
-    n: curve order
-    """
-    # 1) modular inverse of k
-    k_inv = pow(k, -1, n)
-
-    # 2) compute s
-    s = (k_inv * (e + d * r)) % n
-
-    # 3) if s == 0, you must abort and pick a fresh k
-    if s == 0:
-        raise ValueError("s = 0, choose a new k and retry")
-
-    return s
 
 # %%
 # Generation of public and private key pair
