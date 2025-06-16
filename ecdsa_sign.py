@@ -35,7 +35,7 @@ if r == 0:
 
 
 # %%
-# Generation of public and private key pair
+# Input the private key from the user
 user_input = input("Enter your 256-bit private key as an integer: ")
 d = int(user_input)
 if d.bit_length() > 256:

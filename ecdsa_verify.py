@@ -10,6 +10,7 @@ n = 1157920892373161954235709850086879078528375642790749043826051631415181614943
 
 Q = eval(input("Enter the public key: "))
 
+# Input the message from the user
 text = input("Enter the message: ")
 message = text.encode('utf-8')
 
